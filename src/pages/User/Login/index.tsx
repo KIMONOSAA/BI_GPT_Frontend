@@ -1,5 +1,5 @@
 import { Footer } from '@/components';
-import { getFakeCaptcha } from '@/services/ant-design-pro/login';
+
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -21,7 +21,7 @@ import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 import Settings from '../../../../config/defaultSettings';
 import { Link } from 'umi';
-import { getLoginUserUsingGet, userLoginUsingPost } from '@/services/kimo/userController';
+import { getAuthentication, getLoginUser } from '@/services/kimo/userController';
 const useStyles = createStyles(({ token }) => {
   return {
     action: {
@@ -82,29 +82,32 @@ const LoginMessage: React.FC<{
   );
 };
 const Login: React.FC = () => {
-  const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
+  // const [userLoginState, setUserLoginState] = useState<API.LoginResult>({});
   const [type, setType] = useState<string>('account');
   const { initialState, setInitialState } = useModel('@@initialState');
   const { styles } = useStyles();
   const fetchUserInfo = async () => {
-    const userInfo = await getLoginUserUsingGet();
+    const userInfo = await getLoginUser();
+    console.log(userInfo)
     if (userInfo) {
       flushSync(() => {
         setInitialState((s) => ({
           ...s,
-          currentUser: userInfo,
+          currentUser: userInfo.data,
         }));
       });
     }
   };
-  const handleSubmit = async (values: API.UserLoginRequest) => {
+  const handleSubmit = async (values: API.UserAuthenticationRequest) => {
     try {
       // 登录
-      const res = await userLoginUsingPost(
+      const res = await getAuthentication(
         values
       );
-      if (res.code === 0) {
+      if (res.code === 0 && res.data) {
         const defaultLoginSuccessMessage = '登录成功！';
+        localStorage.setItem("token",res.data.accessToken ? res.data.accessToken : '')
+        localStorage.setItem("referToken",res.data.refershToken ? res.data.refershToken : '')
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
@@ -120,7 +123,7 @@ const Login: React.FC = () => {
       message.error(defaultLoginFailureMessage);
     }
   };
-  const { status, type: loginType } = userLoginState;
+  // const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
       <Helmet>
@@ -144,7 +147,7 @@ const Login: React.FC = () => {
           subTitle={'打造专属于你的 AI GPT'}
           actions={['其他登录方式 :', <ActionIcons key="icons" />]}
           onFinish={async (values) => {
-            await handleSubmit(values as API.UserLoginRequest);
+            await handleSubmit(values as API.UserAuthenticationRequest);
           }}
         >
           <Tabs
@@ -169,12 +172,12 @@ const Login: React.FC = () => {
           {type === 'account' && (
             <>
               <ProFormText
-                name="userAccount"
+                name="email"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={'用户名不能含有特殊字符'}
+                placeholder={'请输入电子邮件'}
                 rules={[
                   {
                     required: true,
@@ -183,7 +186,7 @@ const Login: React.FC = () => {
                 ]}
               />
               <ProFormText.Password
-                name="userPassword"
+                name="password"
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined />,
@@ -199,7 +202,7 @@ const Login: React.FC = () => {
             </>
           )}
 
-          {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
+          {/* {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />} */}
           {type === 'mobile' && (
             <>
               <ProFormText
@@ -243,12 +246,12 @@ const Login: React.FC = () => {
                   },
                 ]}
                 onGetCaptcha={async (phone) => {
-                  const result = await getFakeCaptcha({
-                    phone,
-                  });
-                  if (!result) {
-                    return;
-                  }
+                  // const result = await getFakeCaptcha({
+                  //   phone,
+                  // });
+                  // if (!result) {
+                  //   return;
+                  // }
                   message.success('获取验证码成功！验证码为：1234');
                 }}
               />

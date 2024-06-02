@@ -1,394 +1,546 @@
 declare namespace API {
-  type BaseResponseBoolean_ = {
+  type addParams = {
+    name: string;
+  };
+
+  type AIMasterData = {
+    id?: number;
+    aiTitle?: string;
+    aiBody?: string;
+    aiResult?: string;
+    aiMessageSessionId?: number;
+    userTitle?: string;
+    userBody?: string;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+  };
+
+  type AIMasterDataAddRequest = {
+    aiMessageSessionId?: number;
+    aiTitle?: string;
+    aiBody?: string;
+    aiResult?: string;
+    userTitle?: string;
+    userBody?: string;
+  };
+
+  type AIMasterDataQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    createTime?: string;
+    updateTime?: string;
+    aiMessageId?: number;
+  };
+
+  type AIMessageSession = {
+    id?: number;
+    title?: string;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+    userId?: number;
+  };
+
+  type AIMessageSessionAddRequest = {
+    title?: string;
+  };
+
+  type AIMessageSessionQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    title?: string;
+    createTime?: string;
+    updateTime?: string;
+  };
+
+  type AIMessageSessionUpdateRequest = {
+    id?: number;
+    title?: string;
+    userId?: number;
+  };
+
+  type AIResultRecording = {
+    id?: number;
+    aiRoleId?: number;
+    aiTitle?: string;
+    aiBody?: string;
+    aiResult?: string;
+    userTitle?: string;
+    userBody?: string;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+  };
+
+  type AIResultRecordingAddRequest = {
+    createTime?: string;
+    updateTime?: string;
+    status?: boolean;
+    airole?: string;
+    aidescription?: string;
+    aimax_Tokens?: number;
+  };
+
+  type AIRole = {
+    id?: number;
+    userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+    status?: number;
+    airoleReview?: number;
+    airole?: string;
+    aidescription?: string;
+    aimax_Tokens?: number;
+  };
+
+  type AIRoleAddRequest = {
+    status?: number;
+    airole?: string;
+    aidescription?: string;
+    aimax_Tokens?: number;
+  };
+
+  type AIRoleQueryRequest = {
+    current?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    id?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+    userId?: number;
+    status?: number;
+    searchText?: string;
+    airole?: string;
+    aidescription?: string;
+    aimax_Tokens?: string;
+  };
+
+  type AIRoleUpdateRequest = {
+    id?: number;
+    status?: number;
+    airole?: string;
+    aidescription?: string;
+    aimax_Tokens?: number;
+  };
+
+  type AuthentianResponse = {
+    accessToken?: string;
+    refershToken?: string;
+  };
+
+  type BaseResponse = {
+    code?: number;
+    data?: Record<string, any>;
+    message?: string;
+  };
+
+  type BaseResponseAuthentianResponse = {
+    code?: number;
+    data?: AuthentianResponse;
+    message?: string;
+  };
+
+  type BaseResponseBiResponse = {
+    code?: number;
+    data?: BiResponse;
+    message?: string;
+  };
+
+  type BaseResponseBoolean = {
     code?: number;
     data?: boolean;
     message?: string;
   };
 
-  type BaseResponseChart_ = {
+  type BaseResponseChart = {
     code?: number;
     data?: Chart;
     message?: string;
   };
 
-  type BaseResponseInt_ = {
-    code?: number;
-    data?: number;
-    message?: string;
-  };
-
-  type BaseResponseLoginUserVO_ = {
+  type BaseResponseLoginUserVO = {
     code?: number;
     data?: LoginUserVO;
     message?: string;
   };
 
-  type BaseResponseLong_ = {
+  type BaseResponseLong = {
     code?: number;
-    data?: number;
+    data?: API.AIMasterData;
     message?: string;
   };
 
-  type BaseResponsePageChart_ = {
+  type BaseResponsePageAIMasterData = {
     code?: number;
-    data?: PageChart_;
+    data?: PageAIMasterData;
     message?: string;
   };
 
-  type BaseResponsePagePost_ = {
+  type BaseResponsePageAIMessageSession = {
     code?: number;
-    data?: PagePost_;
+    data?: PageAIMessageSession;
     message?: string;
   };
 
-  type BaseResponsePagePostVO_ = {
+  type BaseResponsePageAIResultRecording = {
     code?: number;
-    data?: PagePostVO_;
+    data?: PageAIResultRecording;
     message?: string;
   };
 
-  type BaseResponsePageUser_ = {
+  type BaseResponsePageAIRole = {
     code?: number;
-    data?: PageUser_;
+    data?: PageAIRole;
     message?: string;
   };
 
-  type BaseResponsePageUserVO_ = {
+  type BaseResponsePageChart = {
     code?: number;
-    data?: PageUserVO_;
+    data?: PageChart;
     message?: string;
   };
 
-  type BaseResponsePostVO_ = {
+  type BaseResponsePageUser = {
     code?: number;
-    data?: PostVO;
+    data?: PageUser;
     message?: string;
   };
 
-  type BaseResponseString_ = {
+  type BaseResponsePageUserVO = {
+    code?: number;
+    data?: PageUserVO;
+    message?: string;
+  };
+
+  type BaseResponseString = {
     code?: number;
     data?: string;
     message?: string;
   };
 
-  type BaseResponseUser_ = {
+  type BaseResponseUser = {
     code?: number;
     data?: User;
     message?: string;
   };
 
-  type BaseResponseUserVO_ = {
+  type BaseResponseUserVO = {
     code?: number;
     data?: UserVO;
     message?: string;
   };
 
+  type BiResponse = {
+    genChart?: string;
+    genResult?: string;
+    chartId?: number;
+  };
+
   type Chart = {
+    id?: number;
+    name?: string;
+    goal?: string;
     chartData?: string;
     chartType?: string;
-    createTime?: string;
     genChat?: string;
     genResult?: string;
-    goal?: string;
-    id?: number;
-    isDelete?: number;
-    updateTime?: string;
+    status?: string;
+    execMessage?: string;
     userId?: number;
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
   };
 
   type ChartAddRequest = {
+    name?: string;
+    goal?: string;
     chartData?: string;
     chartType?: string;
-    goal?: string;
   };
 
   type ChartEditRequest = {
+    id?: number;
+    name?: string;
+    goal?: string;
     chartData?: string;
     chartType?: string;
-    goal?: string;
-    id?: number;
   };
 
   type ChartQueryRequest = {
-    chartType?: string;
     current?: number;
-    goal?: string;
-    id?: number;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
+    id?: number;
+    name?: string;
+    goal?: string;
+    chartType?: string;
     userId?: number;
   };
 
   type ChartUpdateRequest = {
+    id?: number;
+    name?: string;
+    goal?: string;
     chartData?: string;
     chartType?: string;
-    createTime?: string;
     genChat?: string;
     genResult?: string;
-    goal?: string;
-    id?: number;
-    isDelete?: number;
+    createTime?: string;
     updateTime?: string;
+    isDelete?: number;
+  };
+
+  type checkAIRoleParams = {
+    checkRequest: CheckRequest;
+  };
+
+  type CheckRequest = {
+    id?: number;
   };
 
   type DeleteRequest = {
     id?: number;
   };
 
-  type getChartByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type genChartByAIRabbitMQParams = {
+    genChartByAI: GenChartyByAIRequest;
   };
 
-  type getPostVOByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type GenChartyByAIRequest = {
+    name?: string;
+    goal?: string;
+    chartType?: string;
   };
 
-  type getUserByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type getChartByIdParams = {
+    id: number;
   };
 
-  type getUserVOByIdUsingGETParams = {
-    /** id */
-    id?: number;
+  type getUserByIdParams = {
+    id: number;
+  };
+
+  type getUserVOByIdParams = {
+    id: number;
+  };
+
+  type GrantedAuthority = {
+    authority?: string;
+  };
+
+  type listAiRoleByPageParams = {
+    aiRoleQueryRequest: AIRoleQueryRequest;
   };
 
   type LoginUserVO = {
-    createTime?: string;
     id?: number;
-    updateTime?: string;
     userAvatar?: string;
-    userName?: string;
-    userProfile?: string;
-    userRole?: string;
+    userAccount?: string;
+    createTime?: string;
+    updateTime?: string;
   };
 
   type OrderItem = {
-    asc?: boolean;
     column?: string;
+    asc?: boolean;
   };
 
-  type PageChart_ = {
-    countId?: string;
+  type PageAIMasterData = {
+    records?: AIMasterData[];
+    total?: number;
+    size?: number;
     current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
     orders?: OrderItem[];
+    optimizeCountSql?: PageAIMasterData;
+    searchCount?: PageAIMasterData;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
     pages?: number;
+  };
+
+  type PageAIMessageSession = {
+    records?: AIMessageSession[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageAIMessageSession;
+    searchCount?: PageAIMessageSession;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageAIResultRecording = {
+    records?: AIResultRecording[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageAIResultRecording;
+    searchCount?: PageAIResultRecording;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageAIRole = {
+    records?: AIRole[];
+    total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageAIRole;
+    searchCount?: PageAIRole;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
+  };
+
+  type PageChart = {
     records?: Chart[];
-    searchCount?: boolean;
-    size?: number;
     total?: number;
+    size?: number;
+    current?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageChart;
+    searchCount?: PageChart;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
   };
 
-  type PagePost_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: Post[];
-    searchCount?: boolean;
-    size?: number;
-    total?: number;
-  };
-
-  type PagePostVO_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
-    records?: PostVO[];
-    searchCount?: boolean;
-    size?: number;
-    total?: number;
-  };
-
-  type PageUser_ = {
-    countId?: string;
-    current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
-    orders?: OrderItem[];
-    pages?: number;
+  type PageUser = {
     records?: User[];
-    searchCount?: boolean;
-    size?: number;
     total?: number;
-  };
-
-  type PageUserVO_ = {
-    countId?: string;
+    size?: number;
     current?: number;
-    maxLimit?: number;
-    optimizeCountSql?: boolean;
     orders?: OrderItem[];
+    optimizeCountSql?: PageUser;
+    searchCount?: PageUser;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
     pages?: number;
+  };
+
+  type PageUserVO = {
     records?: UserVO[];
-    searchCount?: boolean;
-    size?: number;
     total?: number;
-  };
-
-  type Post = {
-    content?: string;
-    createTime?: string;
-    favourNum?: number;
-    id?: number;
-    isDelete?: number;
-    tags?: string;
-    thumbNum?: number;
-    title?: string;
-    updateTime?: string;
-    userId?: number;
-  };
-
-  type PostAddRequest = {
-    content?: string;
-    tags?: string[];
-    title?: string;
-  };
-
-  type PostEditRequest = {
-    content?: string;
-    id?: number;
-    tags?: string[];
-    title?: string;
-  };
-
-  type PostFavourAddRequest = {
-    postId?: number;
-  };
-
-  type PostFavourQueryRequest = {
+    size?: number;
     current?: number;
-    pageSize?: number;
-    postQueryRequest?: PostQueryRequest;
-    sortField?: string;
-    sortOrder?: string;
-    userId?: number;
+    orders?: OrderItem[];
+    optimizeCountSql?: PageUserVO;
+    searchCount?: PageUserVO;
+    optimizeJoinOfCountSql?: boolean;
+    maxLimit?: number;
+    countId?: string;
+    pages?: number;
   };
 
-  type PostQueryRequest = {
-    content?: string;
-    current?: number;
-    favourUserId?: number;
-    id?: number;
-    notId?: number;
-    orTags?: string[];
-    pageSize?: number;
-    searchText?: string;
-    sortField?: string;
-    sortOrder?: string;
-    tags?: string[];
-    title?: string;
-    userId?: number;
+  type rejectAIRoleParams = {
+    checkRequest: CheckRequest;
   };
 
-  type PostThumbAddRequest = {
-    postId?: number;
-  };
-
-  type PostUpdateRequest = {
-    content?: string;
-    id?: number;
-    tags?: string[];
-    title?: string;
-  };
-
-  type PostVO = {
-    content?: string;
-    createTime?: string;
-    favourNum?: number;
-    hasFavour?: boolean;
-    hasThumb?: boolean;
-    id?: number;
-    tagList?: string[];
-    thumbNum?: number;
-    title?: string;
-    updateTime?: string;
-    user?: UserVO;
-    userId?: number;
-  };
-
-  type uploadFileUsingPOSTParams = {
-    biz?: string;
+  type testParams = {
+    uid: string;
+    text: string;
   };
 
   type User = {
-    createTime?: string;
     id?: number;
-    isDelete?: number;
-    updateTime?: string;
     userAccount?: string;
-    userAvatar?: string;
-    userName?: string;
+    email?: string;
     userPassword?: string;
-    userRole?: string;
+    userName?: string;
+    userAvatar?: string;
+    userRole?: 'USER' | 'ADMIN' | 'MANAGER' | 'USERVIP';
+    createTime?: string;
+    updateTime?: string;
+    isDelete?: number;
+    isEnable?: number;
+    accountNonLocked?: boolean;
+    accountNonExpired?: boolean;
+    credentialsNonExpired?: boolean;
+    enabled?: boolean;
+    password?: string;
+    username?: string;
+    authorities?: GrantedAuthority[];
   };
 
   type UserAddRequest = {
+    userName?: string;
     userAccount?: string;
     userAvatar?: string;
-    userName?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
     userRole?: string;
   };
 
-  type userLoginByWxOpenUsingGETParams = {
-    /** code */
-    code: string;
+  type UserAuthenticationRequest = {
+    email?: string;
+    password?: string;
   };
 
-  type UserLoginRequest = {
-    userAccount?: string;
-    userPassword?: string;
+  type UserEmailVerificationRequest = {
+    userId?: string;
+    code?: string;
+  };
+
+  type UserPublishEventRequest = {
+    id?: number;
   };
 
   type UserQueryRequest = {
     current?: number;
-    id?: number;
-    mpOpenId?: string;
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
+    id?: number;
     unionId?: string;
+    mpOpenId?: string;
     userName?: string;
     userProfile?: string;
     userRole?: string;
   };
 
-  type UserRegisterRequest = {
-    checkPassword?: string;
-    userAccount?: string;
-    userPassword?: string;
-  };
-
   type UserUpdateMyRequest = {
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
   };
 
   type UserUpdateRequest = {
     id?: number;
-    userAvatar?: string;
     userName?: string;
+    userAvatar?: string;
     userProfile?: string;
     userRole?: string;
   };
 
   type UserVO = {
-    createTime?: string;
     id?: number;
+    userAccount?: string;
     userAvatar?: string;
-    userName?: string;
-    userProfile?: string;
     userRole?: string;
+    createTime?: string;
   };
 }

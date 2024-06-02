@@ -1,122 +1,115 @@
 // @ts-ignore
 /* eslint-disable */
+import { getHeaders } from '@/global';
 import { request } from '@umijs/max';
 
-/** addChart POST /api/chart/add */
-export async function addChartUsingPost(
-  body: API.ChartAddRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponseLong_>('/api/chart/add', {
+/** 此处后端没有提供注释 POST /chart/add */
+export async function addChart(body: API.ChartAddRequest, options?: { [key: string]: any }) {
+  return request<API.BaseResponseLong>('/chart/add', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     data: body,
     ...(options || {}),
   });
 }
 
-/** deleteChart POST /api/chart/delete */
-export async function deleteChartUsingPost(
-  body: API.DeleteRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponseBoolean_>('/api/chart/delete', {
+/** 此处后端没有提供注释 POST /chart/delete */
+export async function deleteChart(body: API.DeleteRequest, options?: { [key: string]: any }) {
+  return request<API.BaseResponseBoolean>('/chart/delete', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     data: body,
     ...(options || {}),
   });
 }
 
-/** editChart POST /api/chart/edit */
-export async function editChartUsingPost(
-  body: API.ChartEditRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponseBoolean_>('/api/chart/edit', {
+/** 此处后端没有提供注释 POST /chart/edit */
+export async function editChart(body: API.ChartEditRequest, options?: { [key: string]: any }) {
+  return request<API.BaseResponseBoolean>('/chart/edit', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     data: body,
     ...(options || {}),
   });
 }
 
-/** getChartById GET /api/chart/get */
-export async function getChartByIdUsingGet(
+/** 此处后端没有提供注释 POST /chart/gen/rabbit/async */
+export async function genChartByAiRabbitMq(
   // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
-  params: API.getChartByIdUsingGETParams,
+  params: API.genChartByAIRabbitMQParams,
+  body: {},
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseChart_>('/api/chart/get', {
-    method: 'GET',
+  return request<API.BaseResponseBiResponse>('/chart/gen/rabbit/async', {
+    method: 'POST',
+    headers: getHeaders(),
     params: {
       ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-/** listChartAdminByPage POST /api/chart/list/admin/page */
-export async function listChartAdminByPageUsingPost(
-  body: API.ChartQueryRequest,
-  options?: { [key: string]: any },
-) {
-  return request<API.BaseResponsePageChart_>('/api/chart/list/admin/page', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+      genChartByAI: undefined,
+      ...params['genChartByAI'],
     },
     data: body,
     ...(options || {}),
   });
 }
 
-/** listChartUserByPage POST /api/chart/list/chart/page */
-export async function listChartUserByPageUsingPost(
+/** 此处后端没有提供注释 GET /chart/get */
+export async function getChartById(
+  // 叠加生成的Param类型 (非body参数swagger默认没有生成对象)
+  params: API.getChartByIdParams,
+  options?: { [key: string]: any },
+) {
+  return request<API.BaseResponseChart>('/chart/get', {
+    method: 'GET',
+    headers: getHeaders(),
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 POST /chart/list/admin/page */
+export async function listChartAdminByPage(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageChart_>('/api/chart/list/chart/page', {
+  return request<API.BaseResponsePageChart>('/chart/list/admin/page', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     data: body,
     ...(options || {}),
   });
 }
 
-/** listMyChartByPage POST /api/chart/my/list/page */
-export async function listMyChartByPageUsingPost(
+/** 此处后端没有提供注释 POST /chart/list/chart/page */
+export async function listChartUserByPage(
   body: API.ChartQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponsePageChart_>('/api/chart/my/list/page', {
+  return request<API.BaseResponsePageChart>('/chart/list/chart/page', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
     data: body,
     ...(options || {}),
   });
 }
 
-/** updateChart POST /api/chart/update */
-export async function updateChartUsingPost(
-  body: API.ChartUpdateRequest,
+/** 此处后端没有提供注释 POST /chart/my/list/page */
+export async function listMyChartByPage(
+  body: API.ChartQueryRequest,
   options?: { [key: string]: any },
 ) {
-  return request<API.BaseResponseBoolean_>('/api/chart/update', {
+  return request<API.BaseResponsePageChart>('/chart/my/list/page', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: getHeaders(),
+    data: body,
+    ...(options || {}),
+  });
+}
+
+/** 此处后端没有提供注释 POST /chart/update */
+export async function updateChart(body: API.ChartUpdateRequest, options?: { [key: string]: any }) {
+  return request<API.BaseResponseBoolean>('/chart/update', {
+    method: 'POST',
+    headers: getHeaders(),
     data: body,
     ...(options || {}),
   });

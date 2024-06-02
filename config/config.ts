@@ -6,6 +6,7 @@ import proxy from './proxy';
 import routes from './routes';
 const { REACT_APP_ENV = 'dev' } = process.env;
 export default defineConfig({
+
   /**
    * @name 开启 hash 模式
    * @description 让 build 之后的产物包含 hash 后缀。通常用于增量发布和避免浏览器加载缓存。
@@ -75,8 +76,7 @@ export default defineConfig({
    */
   title: 'AI GPT',
   layout: {
-    locale: true,
-    ...defaultSettings,
+    locale: false
   },
   /**
    * @name moment2dayjs 插件
@@ -130,7 +130,7 @@ export default defineConfig({
     {
       requestLibPath: "import { request } from '@umijs/max'",
       // 或者使用在线的版本
-      schemaPath: "http://localhost:8101/api/v2/api-docs",
+      schemaPath: "http://localhost:8101/api/v3/api-docs/kimo",
       projectName: "kimo",
       // schemaPath: join(__dirname, 'oneapi.json'),
       mock: false,
@@ -147,3 +147,7 @@ export default defineConfig({
   esbuildMinifyIIFE: true,
   requestRecord: {},
 });
+
+
+// config.js
+

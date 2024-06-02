@@ -4,7 +4,11 @@ export default [
     layout: false,
     routes: [{ name: '登录', path: '/user/login', component: './User/Login' }],
   },
-  { path: '/welcome', name: '欢迎', icon: 'smile', component: './Welcome' },
+  { path: '/', redirect: '/home' },
+  // { path: '/add_chart', name : "智能分析同步", icon: 'BarChartOutlined', component: './AddChart' },
+  { path: '/add_chart_async', name : "智能分析异步", icon: 'BarChartOutlined', component: './AddChartAsync' },
+  { path: '/my_chart', name: '我的图表', icon: 'PieChartOutlined', component: './MyChart' },
+  { path: '/home', name: '首页', icon: 'PieChartOutlined', component: './Home' },
   {
     path: '/admin',
     name: '管理页',
@@ -15,7 +19,7 @@ export default [
       { path: '/admin/sub-page', name: '二级管理页', component: './Admin' },
     ],
   },
-  { name: '查询表格', icon: 'table', path: '/list', component: './TableList' },
   { path: '/', redirect: '/welcome' },
   { path: '*', layout: false, component: './404' },
+  
 ];

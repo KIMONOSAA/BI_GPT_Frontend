@@ -4,7 +4,8 @@ import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { Link, history } from '@umijs/max';
 import { errorConfig } from './requestErrorConfig';
-import { getLoginUserUsingGet } from './services/kimo/userController';
+import { getLoginUser } from './services/kimo/userController';
+import Settings from './defaultSettings.js';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 
@@ -16,7 +17,8 @@ export async function getInitialState(): Promise<{
 }> {
   const fetchUserInfo = async () => {
     try {
-      const res = await getLoginUserUsingGet();
+      const res = await getLoginUser();
+      console.log(res)
       return res.data;
     } catch (error) {
       history.push(loginPath);
@@ -27,6 +29,7 @@ export async function getInitialState(): Promise<{
   const { location } = history;
   if (location.pathname !== loginPath) {
     const currentUser = await fetchUserInfo();
+    console.log(currentUser)
     return {
       currentUser,
     };
@@ -38,7 +41,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
-    actionsRender: () => [<Question key="doc" />],
+    // actionsRender: () => [<Question key="doc" />],
     avatarProps: {
       src: initialState?.currentUser?.userAvatar,
       title: <AvatarName />,
@@ -46,10 +49,19 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         return <AvatarDropdown>{avatarChildren}</AvatarDropdown>;
       },
     },
+    title: 'AI GPT',
+    contentWidth: 'Fixed',
+    layout: "top",
+    colorPrimary: '#1677FF',
+    splitMenus: false,
+    fixedHeader: true,
+    fixSiderbar: true,
+    colorWeak: false,
+    siderMenuType: "sub",
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      content: initialState?.currentUser?.userAccount,
     },
-    footerRender: () => <Footer />,
+    // footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
@@ -57,26 +69,26 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         history.push(loginPath);
       }
     },
-    bgLayoutImgList: [
-      {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
-        left: 85,
-        bottom: 100,
-        height: '303px',
-      },
-      {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/C2TWRpJpiC0AAAAAAAAAAAAAFl94AQBr',
-        bottom: -68,
-        right: -45,
-        height: '303px',
-      },
-      {
-        src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/F6vSTbj8KpYAAAAAAAAAAAAAFl94AQBr',
-        bottom: 0,
-        left: 0,
-        width: '331px',
-      },
-    ],
+    // bgLayoutImgList: [
+    //   {
+    //     src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/D2LWSqNny4sAAAAAAAAAAAAAFl94AQBr',
+    //     left: 85,
+    //     bottom: 100,
+    //     height: '303px',
+    //   },
+    //   {
+    //     src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/C2TWRpJpiC0AAAAAAAAAAAAAFl94AQBr',
+    //     bottom: -68,
+    //     right: -45,
+    //     height: '303px',
+    //   },
+    //   {
+    //     src: 'https://mdn.alipayobjects.com/yuyan_qk0oxh/afts/img/F6vSTbj8KpYAAAAAAAAAAAAAFl94AQBr',
+    //     bottom: 0,
+    //     left: 0,
+    //     width: '331px',
+    //   },
+    // ],
     links: isDev
       ? [
           <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
@@ -85,7 +97,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           </Link>,
         ]
       : [],
-    menuHeaderRender: undefined,
+
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态
@@ -96,9 +108,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
           {children}
           {isDev && (
             <SettingDrawer
-              disableUrlParams
-              enableDarkTheme
-              settings={initialState?.settings}
+              
+              // disableUrlParams
+              // enableDarkTheme
+              settings={Settings}
               onSettingChange={(settings) => {
                 setInitialState((preInitialState) => ({
                   ...preInitialState,
@@ -120,7 +133,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
  * @doc https://umijs.org/docs/max/request#配置
  */
 export const request = {
-  baseURL: "http://localhost:8101",
+  baseURL: "http://localhost:8101/api",
   withCredentials: true,
   ...errorConfig,
 };

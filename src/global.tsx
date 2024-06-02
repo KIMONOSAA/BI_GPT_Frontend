@@ -16,6 +16,16 @@ const clearCache = () => {
       .catch((e) => console.log(e));
   }
 };
+export const getHeaders = () : {
+  Authorization: string;
+
+} => {
+  const token = localStorage.getItem('token')
+
+  return {
+      Authorization: `Bearer ${token}`
+  }
+}
 
 // if pwa is true
 if (pwa) {
